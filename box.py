@@ -77,19 +77,25 @@ def clear(img, draw, color="black"):
   draw.rectangle([(0,0),img.size], fill=color)
 
 def main():
-  img = Image.new('RGB', (screen_height, screen_width), "black")
+  img = Image.new('RGB', (screen_width, screen_height), "black")
   draw = ImageDraw.Draw(img)
 
   speed = 100
 
   i = 0
-  for x in range(0, screen_width / speed):
-    for y in range(0, screen_height / speed):
-      clear(img, draw)
-      cursor_pattern(draw, "red", x*speed, y*speed)
+  x = 0
+  y = 0
+
+  while (x < screen_width):
+    while (y < screen_height):
+      clear(img, draw, color="gray")
+      cursor_pattern(draw, "white", x, y)
       filename = "cursor_pattern_{:0>6d}.png".format(i);
       print(filename)
-      i=i+1
+      i = i + 1
+      y = y + speed
       img.save(filename, 'PNG')
+    y = 0
+    x = x + speed
 
 main();
