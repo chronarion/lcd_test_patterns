@@ -1,8 +1,12 @@
 #!/usr/bin/python
 
 from PIL import Image, ImageDraw
+# 1920x1080
+# lenovo is 2560x1440
+
 screen_height = 2560
 screen_width = 1440
+
 mid_gray = (128, 128, 128, 0)
 bright_gray = (200, 200, 200, 0)
 
@@ -80,7 +84,7 @@ def main():
   img = Image.new('RGB', (screen_width, screen_height), "black")
   draw = ImageDraw.Draw(img)
 
-  speed = 100
+  speed = 1
 
   i = 0
   x = 0
