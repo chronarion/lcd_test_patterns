@@ -2,13 +2,18 @@
 
 from PIL import Image, ImageDraw
 # 1920x1080
-# qhd is 2560x1440
+# lenovo is 2560x1440
 
-screen_height = 2560
-screen_width = 1440
+screen_height = 1920
+screen_width = 1080
 
 mid_gray = (128, 128, 128, 0)
 bright_gray = (200, 200, 200, 0)
+
+x_speed = 1
+y_speed = 128
+
+cursor_size = 128 
 
 def bottom_right(draw, color, size, x_offset, y_offset):
   c1 = {}
@@ -70,7 +75,7 @@ def top_right(draw, color, size, x_offset, y_offset):
   draw.polygon([(c1['x'], c1['y']),(c2['x'], c2['y']),(c3['x'], c3['y'])], fill = color)
 
 def cursor_pattern(draw, color, x_offset, y_offset):
-  size = 128 
+  size = cursor_size
   spacer = size / 2 
   top_left(draw, color, size, 0+x_offset,0+y_offset)
   top_right(draw, color, size, x_offset + size + spacer, 0+y_offset)
@@ -84,22 +89,23 @@ def main():
   img = Image.new('RGB', (screen_width, screen_height), "black")
   draw = ImageDraw.Draw(img)
 
-  speed = 1
-
   i = 0
   x = 0
   y = 0
 
   while (x < screen_width):
-    while (y < screen_height):
-      clear(img, draw, color="gray")
-      cursor_pattern(draw, "white", x, y)
-      filename = "cursor_pattern_{:0>6d}.png".format(i);
-      print(filename)
-      i = i + 1
-      y = y + speed
-      img.save(filename, 'PNG')
+    clear(img, draw, color="gray")
+    filename = "cursor_pattern_{:0>6d}.png".format(i);
+    print(filename)
+
     y = 0
-    x = x + speed
+    while (y < screen_height):
+      cursor_pattern(draw, "white", x, y)
+      y = y + cursor_size*3
+
+    x = x + x_speed
+
+    i = i + 1
+    img.save(filename, 'PNG')
 
 main();
